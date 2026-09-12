@@ -15,7 +15,6 @@ export default function AdminProductPIM() {
   const [filterCategory, setFilterCategory] = useState('ALL')
   const [searchQuery, setSearchQuery] = useState('')
 
-  // State quản lý Slide-over Form (Tạo mới / Chỉnh sửa)
   const [isSlideOverOpen, setIsSlideOverOpen] = useState(false)
   const [saving, setSaving] = useState(false)
   const [statusMsg, setStatusMsg] = useState({ type: '', text: '' })
@@ -31,7 +30,6 @@ export default function AdminProductPIM() {
     image_url: '',
     description: '',
     is_active: true,
-    // Thuộc tính động theo từng ngành
     socket: '',
     tdp: '',
     chuan_ren: '',
@@ -39,13 +37,11 @@ export default function AdminProductPIM() {
     dai_cm: '',
     rong_cm: '',
     cao_cm: '',
-    // Cờ đánh dấu Hàng nguy hiểm (Pin / Hóa chất)
     is_dangerous: false
   }
 
   const [formData, setFormData] = useState(initialFormState)
 
-  // 1. TẢI DANH SÁCH SẢN PHẨM TỪ SUPABASE
   const fetchProducts = async () => {
     setLoading(true)
     try {
@@ -75,7 +71,6 @@ export default function AdminProductPIM() {
     }
   }, [isAdmin, filterCategory, searchQuery])
 
-  // 2. MỞ FORM TẠO MỚI HOẶC CHỈNH SỬA
   const handleOpenForm = (product = null) => {
     setStatusMsg({ type: '', text: '' })
     if (product) {
@@ -91,7 +86,6 @@ export default function AdminProductPIM() {
         image_url: product.images?.[0] || '',
         description: product.description || '',
         is_active: product.is_active ?? true,
-        // Map thuộc tính động JSONB
         socket: attrs.socket || '',
         tdp: attrs.tdp || '',
         chuan_ren: attrs.chuan_ren || '',
@@ -107,14 +101,12 @@ export default function AdminProductPIM() {
     setIsSlideOverOpen(true)
   }
 
-  // 3. XỬ LÝ LƯU SẢN PHẨM (INSERT / UPDATE)
   const handleSaveProduct = async (e) => {
     e.preventDefault()
     setSaving(true)
     setStatusMsg({ type: '', text: '' })
 
     try {
-      // Đóng gói JSONB Dynamic Attributes theo Ngành
       const dynamicAttributes = {
         is_dangerous: formData.is_dangerous,
         ...(formData.category === 'IT' && {
@@ -165,7 +157,6 @@ export default function AdminProductPIM() {
     }
   }
 
-  // 4. XÓA SẢN PHẨM & BẬT TẮT TRẠNG THÁI
   const handleDeleteProduct = async (id) => {
     if (window.confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
       await supabase.from('products').delete().eq('id', id)
@@ -204,7 +195,6 @@ export default function AdminProductPIM() {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-16">
-      {/* HEADER TOOLBAR BẢNG QUẢN LÝ */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
@@ -226,7 +216,6 @@ export default function AdminProductPIM() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
-        {/* THANH BỘ LỌC VÀ TÌM KIẾM */}
         <div className="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto">
             <span className="text-xs font-bold text-gray-400 flex items-center gap-1">
@@ -278,7 +267,6 @@ export default function AdminProductPIM() {
           </div>
         </div>
 
-        {/* BẢNG DANH SÁCH SẢN PHẨM */}
         <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
           {loading ? (
             <div className="flex justify-center items-center p-12 text-gray-400 gap-2">
@@ -384,28 +372,24 @@ export default function AdminProductPIM() {
                           </button>
                         </td>
                       </tr>
-                    ))}
-                    {products.length === 0 && (
-                      <tr>
-                        <td colSpan={7} className="p-8 text-center text-gray-400">Không tìm thấy dữ liệu sản phẩm.</td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
+                    )
+                  })}
+                  {products.length === 0 && (
+                    <tr>
+                      <td colSpan={7} className="p-8 text-center text-gray-400">Không tìm thấy dữ liệu sản phẩm.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* ============================================================================== */}
-      {/* FORM TRƯỢT SANG TRẢI (SLIDE-OVER PANEL) TẠO / SỬA SẢN PHẨM */}
-      {/* ============================================================================== */}
       {isSlideOverOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden bg-black/50 backdrop-blur-sm flex justify-end animate-in fade-in duration-200">
           <div className="w-full max-w-xl bg-white h-full shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-300">
             
-            {/* HEADER SLIDE-OVER */}
             <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
               <div className="flex items-center gap-2">
                 <Package className="w-5 h-5 text-blue-600" />
@@ -421,10 +405,8 @@ export default function AdminProductPIM() {
               </button>
             </div>
 
-            {/* NỘI DUNG FORM NHẬP DỮ LIỆU */}
             <form id="pim-form" onSubmit={handleSaveProduct} className="flex-1 p-6 overflow-y-auto space-y-5 text-xs">
               
-              {/* Thông tin cơ bản */}
               <div className="space-y-4">
                 <h3 className="font-bold text-gray-400 uppercase tracking-wider text-[10px]">1. Thông tin sản phẩm chung</h3>
                 
@@ -512,14 +494,12 @@ export default function AdminProductPIM() {
                 </div>
               </div>
 
-              {/* BỘ NHẬP THUỘC TÍNH ĐỘNG DYNAMIC ATTRIBUTES THEO NGÀNH */}
               <div className="pt-4 border-t space-y-3">
                 <h3 className="font-bold text-gray-400 uppercase tracking-wider text-[10px] flex items-center justify-between">
                   <span>2. Thuộc tính động PIM ({formData.category})</span>
                   <span className="text-blue-600 font-normal">Tự động điều chỉnh theo Ngành</span>
                 </h3>
 
-                {/* NGÀNH IT */}
                 {formData.category === 'IT' && (
                   <div className="p-4 bg-blue-50/70 rounded-2xl border border-blue-100 space-y-3">
                     <div className="grid grid-cols-2 gap-3">
@@ -547,7 +527,6 @@ export default function AdminProductPIM() {
                   </div>
                 )}
 
-                {/* NGÀNH CƠ KHÍ */}
                 {formData.category === 'CO_KHI' && (
                   <div className="p-4 bg-amber-50/70 rounded-2xl border border-amber-100 space-y-3">
                     <div className="grid grid-cols-2 gap-3">
@@ -575,7 +554,6 @@ export default function AdminProductPIM() {
                   </div>
                 )}
 
-                {/* NGÀNH GIA DỤNG / NỘI THẤT */}
                 {formData.category === 'GIA_DUNG_NOI_THAT' && (
                   <div className="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-100 space-y-3">
                     <label className="block font-bold text-emerald-900 mb-1">Kích thước 3 chiều (Dài x Rộng x Cao cm)</label>
@@ -606,7 +584,6 @@ export default function AdminProductPIM() {
                 )}
               </div>
 
-              {/* CÔNG TẮC TOGGLE ĐÁNH DẤU HÀNG NGUY HIỂM */}
               <div className="pt-4 border-t space-y-2">
                 <h3 className="font-bold text-gray-400 uppercase tracking-wider text-[10px]">3. Phân loại Logistics Hàng hóa</h3>
                 <div className="p-4 bg-red-50/70 rounded-2xl border border-red-200 flex items-center justify-between">
@@ -626,7 +603,6 @@ export default function AdminProductPIM() {
                 </div>
               </div>
 
-              {/* Mô tả chi tiết */}
               <div className="pt-2">
                 <label className="block font-bold text-gray-700 mb-1">Mô tả sản phẩm</label>
                 <textarea
@@ -639,7 +615,6 @@ export default function AdminProductPIM() {
               </div>
             </form>
 
-            {/* FOOTER NÚT BẤM LƯU */}
             <div className="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-end gap-3">
               <button
                 type="button"
