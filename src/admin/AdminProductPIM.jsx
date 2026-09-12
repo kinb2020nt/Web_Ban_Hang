@@ -173,20 +173,20 @@ export default function AdminProductPIM() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+        <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
       </div>
     )
   }
 
   if (!isAdmin) {
     return (
-      <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-3xl shadow-xl text-center space-y-4 border border-red-100">
-        <div className="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto">
-          <ShieldAlert className="w-10 h-10" />
+      <div className="max-w-md mx-auto my-20 p-8 bg-white rounded-3xl shadow-2xl text-center space-y-4 border border-rose-100">
+        <div className="w-16 h-16 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mx-auto">
+          <ShieldAlert className="w-8 h-8" />
         </div>
-        <h2 className="text-xl font-bold text-gray-800">Truy cập bị từ chối</h2>
-        <p className="text-xs text-gray-500">
+        <h2 className="text-xl font-bold text-slate-800">Truy cập bị từ chối</h2>
+        <p className="text-xs text-slate-500 leading-relaxed">
           Chỉ tài khoản Quản trị viên (role === 'admin') mới được quyền truy cập trang PIM này.
         </p>
       </div>
@@ -194,20 +194,23 @@ export default function AdminProductPIM() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-16">
-      <div className="bg-white border-b border-gray-200">
+    <div className="min-h-screen bg-slate-50/50 pb-20 font-sans">
+      {/* HEADER TOP BAR */}
+      <div className="bg-white border-b border-slate-200/80 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <Package className="w-6 h-6 text-blue-600" />
-              <h1 className="text-xl sm:text-2xl font-black text-gray-900">Quản Lý Sản Phẩm Smart PIM</h1>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-inner">
+              <Package className="w-6 h-6" />
             </div>
-            <p className="text-xs text-gray-500 mt-1">Cấu hình thông số kỹ thuật động JSONB & Phân loại vận chuyển Logistics</p>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Quản Lý Sản Phẩm Smart PIM</h1>
+              <p className="text-xs text-slate-400 font-medium mt-0.5">Cấu hình thông số kỹ thuật động JSONB & Phân loại vận chuyển Logistics</p>
+            </div>
           </div>
 
           <button
             onClick={() => handleOpenForm()}
-            className="py-2.5 px-5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl text-xs shadow-md flex items-center justify-center gap-2 transition"
+            className="py-2.5 px-5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold rounded-2xl text-xs shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition-all duration-200"
           >
             <Plus className="w-4 h-4" />
             <span>Thêm Sản Phẩm Mới</span>
@@ -215,116 +218,118 @@ export default function AdminProductPIM() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
-        <div className="bg-white p-4 rounded-3xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto">
-            <span className="text-xs font-bold text-gray-400 flex items-center gap-1">
-              <Filter className="w-3.5 h-3.5" /> Lọc theo:
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-6">
+        {/* LỌC & TÌM KIẾM */}
+        <div className="bg-white p-4 rounded-3xl shadow-sm border border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+            <span className="text-xs font-bold text-slate-400 flex items-center gap-1.5 mr-1">
+              <Filter className="w-3.5 h-3.5 text-indigo-500" /> Ngành hàng:
             </span>
             <button
               onClick={() => setFilterCategory('ALL')}
-              className={`px-3 py-1.5 text-xs font-bold rounded-xl transition ${
-                filterCategory === 'ALL' ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 shrink-0 ${
+                filterCategory === 'ALL' ? 'bg-slate-900 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
-              Tất cả ngành
+              Tất cả
             </button>
             <button
               onClick={() => setFilterCategory('IT')}
-              className={`px-3 py-1.5 text-xs font-bold rounded-xl transition flex items-center gap-1 ${
-                filterCategory === 'IT' ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 shrink-0 flex items-center gap-1.5 ${
+                filterCategory === 'IT' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
-              <Cpu className="w-3.5 h-3.5 text-blue-500" /> IT
+              <Cpu className="w-3.5 h-3.5" /> IT
             </button>
             <button
               onClick={() => setFilterCategory('CO_KHI')}
-              className={`px-3 py-1.5 text-xs font-bold rounded-xl transition flex items-center gap-1 ${
-                filterCategory === 'CO_KHI' ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 shrink-0 flex items-center gap-1.5 ${
+                filterCategory === 'CO_KHI' ? 'bg-amber-600 text-white shadow-md shadow-amber-600/30' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
-              <Wrench className="w-3.5 h-3.5 text-amber-500" /> Cơ khí
+              <Wrench className="w-3.5 h-3.5" /> Cơ khí
             </button>
             <button
               onClick={() => setFilterCategory('GIA_DUNG_NOI_THAT')}
-              className={`px-3 py-1.5 text-xs font-bold rounded-xl transition flex items-center gap-1 ${
-                filterCategory === 'GIA_DUNG_NOI_THAT' ? 'bg-blue-600 text-white shadow' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all duration-200 shrink-0 flex items-center gap-1.5 ${
+                filterCategory === 'GIA_DUNG_NOI_THAT' ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
-              <Home className="w-3.5 h-3.5 text-emerald-500" /> Gia dụng
+              <Home className="w-3.5 h-3.5" /> Gia dụng
             </button>
           </div>
 
-          <div className="relative w-full sm:w-72">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <div className="relative w-full sm:w-80">
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               placeholder="Tìm theo tên sản phẩm..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-9 pr-4 py-2 text-xs font-medium border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
             />
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+        {/* BẢNG SẢN PHẨM */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-200/70 overflow-hidden">
           {loading ? (
-            <div className="flex justify-center items-center p-12 text-gray-400 gap-2">
-              <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
-              <span className="text-xs font-semibold">Đang tải bảng dữ liệu PIM...</span>
+            <div className="flex justify-center items-center p-14 text-slate-400 gap-3">
+              <Loader2 className="w-6 h-6 animate-spin text-indigo-600" />
+              <span className="text-xs font-bold">Đang tải bảng dữ liệu PIM...</span>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-gray-50 border-b border-gray-100 text-gray-500 font-semibold uppercase tracking-wider">
-                    <th className="p-4">Sản phẩm / SKU</th>
-                    <th className="p-4">Ngành hàng</th>
-                    <th className="p-4">Thuộc tính kỹ thuật PIM</th>
-                    <th className="p-4">Giá bán & Kho</th>
-                    <th className="p-4">Loại hàng</th>
-                    <th className="p-4">Trạng thái</th>
-                    <th className="p-4 text-right">Thao tác</th>
+                  <tr className="bg-slate-50/80 border-b border-slate-100 text-slate-400 font-extrabold uppercase tracking-wider text-[10px]">
+                    <th className="py-4 px-5">Sản phẩm / SKU</th>
+                    <th className="py-4 px-5">Ngành hàng</th>
+                    <th className="py-4 px-5">Thuộc tính kỹ thuật PIM</th>
+                    <th className="py-4 px-5">Giá bán & Kho</th>
+                    <th className="py-4 px-5">Phân loại hàng</th>
+                    <th className="py-4 px-5">Trạng thái</th>
+                    <th className="py-4 px-5 text-right">Thao tác</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-slate-100 font-medium">
                   {products.map((prod) => {
                     const attrs = prod.dynamic_attributes || {}
                     const isDangerous = attrs.is_dangerous || attrs.dangerous_goods
                     return (
-                      <tr key={prod.id} className="hover:bg-gray-50/50 transition">
-                        <td className="p-4 flex items-center gap-3">
+                      <tr key={prod.id} className="hover:bg-indigo-50/30 transition-colors duration-150">
+                        <td className="py-4 px-5 flex items-center gap-3">
                           <img
                             src={prod.images?.[0] || 'https://via.placeholder.com/60'}
                             alt=""
-                            className="w-12 h-12 rounded-xl object-contain border border-gray-100 bg-gray-50"
+                            className="w-12 h-12 rounded-2xl object-contain border border-slate-200/60 bg-slate-50 p-1 shrink-0"
                           />
                           <div>
-                            <p className="font-bold text-gray-800 line-clamp-1">{prod.name}</p>
-                            <span className="text-[10px] font-mono font-semibold text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
+                            <p className="font-bold text-slate-800 line-clamp-1 text-xs">{prod.name}</p>
+                            <span className="text-[10px] font-mono font-bold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded-md mt-0.5 inline-block">
                               SKU: {prod.sku}
                             </span>
                           </div>
                         </td>
-                        <td className="p-4">
-                          <span className={`inline-flex items-center gap-1 font-bold px-2.5 py-1 rounded-full text-[10px] ${
-                            prod.category === 'IT' ? 'bg-blue-50 text-blue-700' :
-                            prod.category === 'CO_KHI' ? 'bg-amber-50 text-amber-700' : 'bg-emerald-50 text-emerald-700'
+                        <td className="py-4 px-5">
+                          <span className={`inline-flex items-center gap-1 font-extrabold px-2.5 py-1 rounded-full text-[10px] ${
+                            prod.category === 'IT' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200/60' :
+                            prod.category === 'CO_KHI' ? 'bg-amber-50 text-amber-700 border border-amber-200/60' : 'bg-emerald-50 text-emerald-700 border border-emerald-200/60'
                           }`}>
                             {prod.category}
                           </span>
                         </td>
-                        <td className="p-4">
-                          <div className="text-[11px] text-gray-600 space-y-0.5">
+                        <td className="py-4 px-5">
+                          <div className="text-[11px] text-slate-600 space-y-0.5">
                             {prod.category === 'IT' && (
                               <>
-                                <p>Socket: <strong className="text-blue-600">{attrs.socket || 'N/A'}</strong></p>
+                                <p>Socket: <strong className="text-indigo-600 font-bold">{attrs.socket || 'N/A'}</strong></p>
                                 <p>TDP: <strong>{attrs.tdp || 'N/A'}</strong></p>
                               </>
                             )}
                             {prod.category === 'CO_KHI' && (
                               <>
-                                <p>Ren: <strong className="text-amber-600">{attrs.chuan_ren || 'N/A'}</strong></p>
+                                <p>Ren: <strong className="text-amber-600 font-bold">{attrs.chuan_ren || 'N/A'}</strong></p>
                                 <p>Lực siết: <strong>{attrs.luc_siet || 'N/A'}</strong></p>
                               </>
                             )}
@@ -333,40 +338,40 @@ export default function AdminProductPIM() {
                             )}
                           </div>
                         </td>
-                        <td className="p-4">
-                          <p className="font-bold text-blue-600">{formatVND(prod.sale_price || prod.price)}</p>
-                          <p className="text-[10px] text-gray-400">Tồn: <strong className="text-gray-700">{prod.stock_quantity}</strong></p>
+                        <td className="py-4 px-5">
+                          <p className="font-black text-indigo-600 text-xs">{formatVND(prod.sale_price || prod.price)}</p>
+                          <p className="text-[10px] text-slate-400">Tồn: <strong className="text-slate-700">{prod.stock_quantity}</strong></p>
                         </td>
-                        <td className="p-4">
+                        <td className="py-4 px-5">
                           {isDangerous ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-red-100 text-red-700 font-bold rounded-md text-[10px] animate-pulse">
-                              <AlertTriangle className="w-3 h-3" /> Pin / Hóa chất (DG)
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-rose-50 text-rose-700 border border-rose-200/60 font-bold rounded-lg text-[10px] animate-pulse">
+                              <AlertTriangle className="w-3 h-3 text-rose-500" /> Pin / Hóa chất (DG)
                             </span>
                           ) : (
-                            <span className="text-gray-400 text-[10px]">Thường</span>
+                            <span className="text-slate-400 text-[10px]">Thường</span>
                           )}
                         </td>
-                        <td className="p-4">
+                        <td className="py-4 px-5">
                           <button
                             onClick={() => handleToggleActive(prod.id, prod.is_active)}
-                            className={`flex items-center gap-1 font-bold px-2 py-0.5 rounded-full text-[10px] ${
-                              prod.is_active ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-500'
+                            className={`flex items-center gap-1 font-bold px-2.5 py-1 rounded-full text-[10px] border transition-all ${
+                              prod.is_active ? 'bg-emerald-50 text-emerald-800 border-emerald-200/60' : 'bg-slate-100 text-slate-500 border-slate-200'
                             }`}
                           >
-                            {prod.is_active ? <ToggleRight className="w-4 h-4 text-emerald-600" /> : <ToggleLeft className="w-4 h-4 text-gray-400" />}
+                            {prod.is_active ? <ToggleRight className="w-4 h-4 text-emerald-600" /> : <ToggleLeft className="w-4 h-4 text-slate-400" />}
                             {prod.is_active ? 'Bật' : 'Tắt'}
                           </button>
                         </td>
-                        <td className="p-4 text-right space-x-1">
+                        <td className="py-4 px-5 text-right space-x-1">
                           <button
                             onClick={() => handleOpenForm(prod)}
-                            className="p-1.5 text-gray-600 hover:text-blue-600 hover:bg-gray-100 rounded-lg transition"
+                            className="p-1.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all"
                           >
                             <Edit3 className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleDeleteProduct(prod.id)}
-                            className="p-1.5 text-gray-600 hover:text-red-600 hover:bg-gray-100 rounded-lg transition"
+                            className="p-1.5 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -376,7 +381,7 @@ export default function AdminProductPIM() {
                   })}
                   {products.length === 0 && (
                     <tr>
-                      <td colSpan={7} className="p-8 text-center text-gray-400">Không tìm thấy dữ liệu sản phẩm.</td>
+                      <td colSpan={7} className="py-12 text-center text-slate-400 font-medium">Không tìm thấy dữ liệu sản phẩm.</td>
                     </tr>
                   )}
                 </tbody>
@@ -386,60 +391,63 @@ export default function AdminProductPIM() {
         </div>
       </div>
 
+      {/* SLIDE-OVER DRAWER THÊM/SỬA SẢN PHẨM */}
       {isSlideOverOpen && (
-        <div className="fixed inset-0 z-50 overflow-hidden bg-black/50 backdrop-blur-sm flex justify-end animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 overflow-hidden bg-slate-950/60 backdrop-blur-md flex justify-end animate-in fade-in duration-200">
           <div className="w-full max-w-xl bg-white h-full shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-300">
             
-            <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-              <div className="flex items-center gap-2">
-                <Package className="w-5 h-5 text-blue-600" />
-                <h2 className="text-base font-bold text-gray-800">
+            <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                  <Package className="w-5 h-5" />
+                </div>
+                <h2 className="text-base font-black text-slate-800">
                   {formData.id ? 'Chỉnh Sửa Sản Phẩm PIM' : 'Thêm Sản Phẩm Smart PIM Mới'}
                 </h2>
               </div>
               <button
                 onClick={() => setIsSlideOverOpen(false)}
-                className="p-1.5 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-200 transition"
+                className="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-200/50 transition"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form id="pim-form" onSubmit={handleSaveProduct} className="flex-1 p-6 overflow-y-auto space-y-5 text-xs">
+            <form id="pim-form" onSubmit={handleSaveProduct} className="flex-1 p-6 overflow-y-auto space-y-6 text-xs">
               
               <div className="space-y-4">
-                <h3 className="font-bold text-gray-400 uppercase tracking-wider text-[10px]">1. Thông tin sản phẩm chung</h3>
+                <h3 className="font-extrabold text-slate-400 uppercase tracking-wider text-[10px]">1. Thông tin sản phẩm chung</h3>
                 
                 <div>
-                  <label className="block font-bold text-gray-700 mb-1">Tên sản phẩm *</label>
+                  <label className="block font-bold text-slate-700 mb-1">Tên sản phẩm *</label>
                   <input
                     type="text"
                     required
                     placeholder="Bộ vi xử lý Intel Core i7-14700K..."
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-medium"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-bold text-gray-700 mb-1">Mã SKU *</label>
+                    <label className="block font-bold text-slate-700 mb-1">Mã SKU *</label>
                     <input
                       type="text"
                       required
                       placeholder="IT-CPU-14700K"
                       value={formData.sku}
                       onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
-                      className="w-full px-3 py-2 border rounded-xl outline-none font-mono"
+                      className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl outline-none font-mono font-bold text-indigo-600"
                     />
                   </div>
                   <div>
-                    <label className="block font-bold text-gray-700 mb-1">Ngành hàng *</label>
+                    <label className="block font-bold text-slate-700 mb-1">Ngành hàng *</label>
                     <select
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className="w-full px-3 py-2 border rounded-xl outline-none bg-white font-bold text-blue-600"
+                      className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl outline-none bg-white font-bold text-indigo-600"
                     >
                       <option value="IT">Công nghệ IT</option>
                       <option value="CO_KHI">Dụng cụ Cơ khí</option>
@@ -450,77 +458,77 @@ export default function AdminProductPIM() {
 
                 <div className="grid grid-cols-3 gap-3">
                   <div>
-                    <label className="block font-bold text-gray-700 mb-1">Giá gốc (VND) *</label>
+                    <label className="block font-bold text-slate-700 mb-1">Giá gốc (VND) *</label>
                     <input
                       type="number"
                       required
                       placeholder="10500000"
                       value={formData.price}
                       onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                      className="w-full px-3 py-2 border rounded-xl outline-none"
+                      className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl outline-none font-medium"
                     />
                   </div>
                   <div>
-                    <label className="block font-bold text-gray-700 mb-1">Giá khuyến mãi</label>
+                    <label className="block font-bold text-slate-700 mb-1">Giá khuyến mãi</label>
                     <input
                       type="number"
                       placeholder="9990000"
                       value={formData.sale_price}
                       onChange={(e) => setFormData({ ...formData, sale_price: e.target.value })}
-                      className="w-full px-3 py-2 border rounded-xl outline-none"
+                      className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl outline-none font-medium"
                     />
                   </div>
                   <div>
-                    <label className="block font-bold text-gray-700 mb-1">Số lượng tồn kho</label>
+                    <label className="block font-bold text-slate-700 mb-1">Tồn kho</label>
                     <input
                       type="number"
                       min={0}
                       value={formData.stock_quantity}
                       onChange={(e) => setFormData({ ...formData, stock_quantity: e.target.value })}
-                      className="w-full px-3 py-2 border rounded-xl outline-none"
+                      className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl outline-none font-medium"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block font-bold text-gray-700 mb-1">Đường dẫn Hình ảnh (URL)</label>
+                  <label className="block font-bold text-slate-700 mb-1">Đường dẫn Hình ảnh (URL)</label>
                   <input
                     type="text"
                     placeholder="https://images.unsplash.com/..."
                     value={formData.image_url}
                     onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-xl outline-none"
+                    className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl outline-none font-medium"
                   />
                 </div>
               </div>
 
-              <div className="pt-4 border-t space-y-3">
-                <h3 className="font-bold text-gray-400 uppercase tracking-wider text-[10px] flex items-center justify-between">
+              <div className="pt-4 border-t border-slate-100 space-y-3">
+                <h3 className="font-extrabold text-slate-400 uppercase tracking-wider text-[10px] flex items-center justify-between">
                   <span>2. Thuộc tính động PIM ({formData.category})</span>
-                  <span className="text-blue-600 font-normal">Tự động điều chỉnh theo Ngành</span>
+                  <span className="text-indigo-600 font-bold">Tự động điều chỉnh theo Ngành</span>
                 </h3>
 
                 {formData.category === 'IT' && (
-                  <div className="p-4 bg-blue-50/70 rounded-2xl border border-blue-100 space-y-3">
+                  <div className="p-4 bg-indigo-50/60 rounded-2xl border border-indigo-100 space-y-3">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="block font-bold text-blue-900 mb-1">Socket CPU</label>
+                        <label className="block font-bold text-indigo-900 mb-1">Socket CPU</label>
                         <input
                           type="text"
                           placeholder="LGA1700 / AM5"
                           value={formData.socket}
                           onChange={(e) => setFormData({ ...formData, socket: e.target.value })}
-                          className="w-full px-3 py-2 border border-blue-200 rounded-xl outline-none bg-white"
+                          className="w-full px-3 py-2 border border-indigo-200/80 rounded-xl outline-none bg-white font-medium"
                         />
                       </div>
                       <div>
-                        <label className="block font-bold text-blue-900 mb-1">Công suất TDP</label>
+                        <label className="block font-bold text-indigo-900 mb-1">Công suất TDP</label>
                         <input
                           type="text"
                           placeholder="125W / 65W"
                           value={formData.tdp}
                           onChange={(e) => setFormData({ ...formData, tdp: e.target.value })}
-                          className="w-full px-3 py-2 border border-blue-200 rounded-xl outline-none bg-white"
+                          className="w-full px-3 py-2 border border-indigo-200/80 rounded-xl outline-none bg-white font-medium"
                         />
                       </div>
                     </div>
@@ -528,7 +536,7 @@ export default function AdminProductPIM() {
                 )}
 
                 {formData.category === 'CO_KHI' && (
-                  <div className="p-4 bg-amber-50/70 rounded-2xl border border-amber-100 space-y-3">
+                  <div className="p-4 bg-amber-50/60 rounded-2xl border border-amber-100 space-y-3">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
                         <label className="block font-bold text-amber-900 mb-1">Chuẩn ren</label>
@@ -537,7 +545,7 @@ export default function AdminProductPIM() {
                           placeholder="M8 / M10 / Tiêu chuẩn"
                           value={formData.chuan_ren}
                           onChange={(e) => setFormData({ ...formData, chuan_ren: e.target.value })}
-                          className="w-full px-3 py-2 border border-amber-200 rounded-xl outline-none bg-white"
+                          className="w-full px-3 py-2 border border-amber-200/80 rounded-xl outline-none bg-white font-medium"
                         />
                       </div>
                       <div>
@@ -547,7 +555,7 @@ export default function AdminProductPIM() {
                           placeholder="24-27 Nm"
                           value={formData.luc_siet}
                           onChange={(e) => setFormData({ ...formData, luc_siet: e.target.value })}
-                          className="w-full px-3 py-2 border border-amber-200 rounded-xl outline-none bg-white"
+                          className="w-full px-3 py-2 border border-amber-200/80 rounded-xl outline-none bg-white font-medium"
                         />
                       </div>
                     </div>
@@ -555,7 +563,7 @@ export default function AdminProductPIM() {
                 )}
 
                 {formData.category === 'GIA_DUNG_NOI_THAT' && (
-                  <div className="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-100 space-y-3">
+                  <div className="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-100 space-y-3">
                     <label className="block font-bold text-emerald-900 mb-1">Kích thước 3 chiều (Dài x Rộng x Cao cm)</label>
                     <div className="grid grid-cols-3 gap-2">
                       <input
@@ -563,63 +571,63 @@ export default function AdminProductPIM() {
                         placeholder="Dài (cm)"
                         value={formData.dai_cm}
                         onChange={(e) => setFormData({ ...formData, dai_cm: e.target.value })}
-                        className="px-3 py-2 border border-emerald-200 rounded-xl outline-none bg-white"
+                        className="px-3 py-2 border border-emerald-200/80 rounded-xl outline-none bg-white font-medium"
                       />
                       <input
                         type="number"
                         placeholder="Rộng (cm)"
                         value={formData.rong_cm}
                         onChange={(e) => setFormData({ ...formData, rong_cm: e.target.value })}
-                        className="px-3 py-2 border border-emerald-200 rounded-xl outline-none bg-white"
+                        className="px-3 py-2 border border-emerald-200/80 rounded-xl outline-none bg-white font-medium"
                       />
                       <input
                         type="number"
                         placeholder="Cao (cm)"
                         value={formData.cao_cm}
                         onChange={(e) => setFormData({ ...formData, cao_cm: e.target.value })}
-                        className="px-3 py-2 border border-emerald-200 rounded-xl outline-none bg-white"
+                        className="px-3 py-2 border border-emerald-200/80 rounded-xl outline-none bg-white font-medium"
                       />
                     </div>
                   </div>
                 )}
               </div>
 
-              <div className="pt-4 border-t space-y-2">
-                <h3 className="font-bold text-gray-400 uppercase tracking-wider text-[10px]">3. Phân loại Logistics Hàng hóa</h3>
-                <div className="p-4 bg-red-50/70 rounded-2xl border border-red-200 flex items-center justify-between">
+              <div className="pt-4 border-t border-slate-100 space-y-2">
+                <h3 className="font-extrabold text-slate-400 uppercase tracking-wider text-[10px]">3. Phân loại Logistics Hàng hóa</h3>
+                <div className="p-4 bg-rose-50/60 rounded-2xl border border-rose-200/80 flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <span className="font-bold text-red-900 flex items-center gap-1.5">
-                      <AlertTriangle className="w-4 h-4 text-red-600" /> Đánh dấu Hàng nguy hiểm (Dangerous Goods)
+                    <span className="font-extrabold text-rose-900 flex items-center gap-1.5">
+                      <AlertTriangle className="w-4 h-4 text-rose-600" /> Đánh dấu Hàng nguy hiểm (Dangerous Goods)
                     </span>
-                    <p className="text-[11px] text-red-700">Chứa Pin Lithium, Hóa chất dễ cháy nổ (Yêu cầu tuyến giao nhận riêng)</p>
+                    <p className="text-[11px] text-rose-700">Chứa Pin Lithium, Hóa chất dễ cháy nổ (Yêu cầu tuyến giao nhận riêng)</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, is_dangerous: !formData.is_dangerous })}
-                    className="text-red-600 focus:outline-none"
+                    className="text-rose-600 focus:outline-none"
                   >
-                    {formData.is_dangerous ? <ToggleRight className="w-8 h-8 text-red-600" /> : <ToggleLeft className="w-8 h-8 text-gray-400" />}
+                    {formData.is_dangerous ? <ToggleRight className="w-8 h-8 text-rose-600" /> : <ToggleLeft className="w-8 h-8 text-slate-300" />}
                   </button>
                 </div>
               </div>
 
               <div className="pt-2">
-                <label className="block font-bold text-gray-700 mb-1">Mô tả sản phẩm</label>
+                <label className="block font-bold text-slate-700 mb-1">Mô tả sản phẩm</label>
                 <textarea
                   rows={3}
                   placeholder="Nhập mô tả chi tiết sản phẩm..."
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-3 py-2 border rounded-xl outline-none"
+                  className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl outline-none font-medium focus:ring-2 focus:ring-indigo-500/20"
                 />
               </div>
             </form>
 
-            <div className="p-4 border-t border-gray-100 bg-gray-50 flex items-center justify-end gap-3">
+            <div className="p-4 border-t border-slate-100 bg-slate-50 flex items-center justify-end gap-3">
               <button
                 type="button"
                 onClick={() => setIsSlideOverOpen(false)}
-                className="py-2.5 px-4 bg-gray-200 text-gray-700 font-bold rounded-xl text-xs"
+                className="py-2.5 px-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl text-xs transition"
               >
                 Hủy
               </button>
@@ -627,7 +635,7 @@ export default function AdminProductPIM() {
                 form="pim-form"
                 type="submit"
                 disabled={saving}
-                className="py-2.5 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-md transition disabled:opacity-50"
+                className="py-2.5 px-6 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold rounded-xl text-xs flex items-center gap-2 shadow-lg shadow-indigo-600/30 transition-all disabled:opacity-50"
               >
                 {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                 <span>{formData.id ? 'Cập Nhật Sản Phẩm' : 'Lưu Sản Phẩm Mới'}</span>
